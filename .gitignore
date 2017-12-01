@@ -22,3 +22,5 @@ build/Release
 
 # Bower
 bower_components
+
+/node_modules
