@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             command: 'node debug api/server'
         },
         deploy: {
-            command: 'node deploy/createNewEC2'
+            command: 'eb deploy'
         }
     });
 };
