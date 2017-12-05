@@ -1,17 +1,15 @@
-var mongoose = require(mongoose),
-Schema = mongoose.Schema,
-bcrypt = require(bcrypt),
-SALT_WORK_FACTOR = 10;
+'use strict';
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var bcrypt = require('bcrypt');
+bcrypt.SALT_WORK_FACTOR = 10;
 
 var UserSchema = new Schema({
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
-    project: {
-        projectID: {Number, required: true},
-        ProjectType: {String, required: true}
-    }
-});
-UserSchema.pre(save, function(next) {
+    userId: Schema.Types.ObjectId
+  });
+UserSchema.pre(function(next) {
     var user = this;
 
     // only hash the password if it has been modified (or is new)
@@ -37,4 +35,4 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
         cb(null, isMatch);
     });
 };
-module.exports = mongoose.model(User, UserSchema);
+module.exports = mongoose.model('User', UserSchema);
