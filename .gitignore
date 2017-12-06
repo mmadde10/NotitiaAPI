@@ -24,3 +24,6 @@ build/Release
 bower_components
 
 /node_modules
+
+#Secure Files
+secure.js

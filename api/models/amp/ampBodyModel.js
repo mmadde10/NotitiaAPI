@@ -7,23 +7,7 @@ var ampBodySchema = new Schema({
     ampAuthor: String,
     ampArticleText: String,
     isBody: Boolean,
-    ampImg: {
-        imgID: Schema.Types.ObjectId,
-        name: String,
-        src: String,
-        width: [{
-            type: Number,
-             default: 16
-        }],
-        height: [{
-            type: Number, 
-            default: 9
-        }],
-        layout: [{
-            type: String, 
-            default: 'responsive'
-        }],
-    },
+    imgID: Schema.Types.ObjectId,
     ampiframe:{
         iframeId: Schema.Types.ObjectId,
         title: String,
@@ -77,9 +61,7 @@ var ampBodySchema = new Schema({
              default: 'slides'
             }],
         ampImg: [{
-            width:Number,
-            height:Number,
-            src: Number
+            ampImgID: Schema.Types.ObjectId
         }]
     },
     ampAnalytics:{
@@ -91,7 +73,8 @@ var ampBodySchema = new Schema({
             "vars": [{
                 "account": String
                 }]
-            }
+            },
+            userID: {type: Schema.Types.ObjectId, ref: 'user'},
         }
 });
-module.exports = mongoose.model('Body', ampBodySchema);
+module.exports = {ampBodySchema};

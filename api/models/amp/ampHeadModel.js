@@ -66,7 +66,9 @@ var ampDocumentHeadSchema = new Schema({
     },
     ampStyle: String,
     ampDocumentBodyID: {type: Schema.Types.ObjectId, ref: 'Body'},
-    isHead: Boolean
+    isHead: Boolean,
+    userID: Number
 });
 
-module.exports = mongoose.model('ampHead', ampDocumentHeadSchema);
+
+module.exports = {ampDocumentHeadSchema};
