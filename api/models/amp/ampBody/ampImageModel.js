@@ -3,9 +3,15 @@ var Schema = mongoose.Schema;
 
 var ampImgSchema = new Schema({
     ampImg: {
-        imgID: Schema.Types.ObjectId,
-        name: String,
-        src: String,
+        imgId: Schema.Types.ObjectId,
+        name: {
+            type: String,
+            required: true
+        },
+        src: {
+            type: String,
+            required: true
+        },
         width: [{
             type: Number,
              default: 16
@@ -20,4 +26,4 @@ var ampImgSchema = new Schema({
         }],
     },
 });
-module.exports = mongoose.model('img', ampImgSchema);
+module.exports = ampImgSchema;

@@ -2,8 +2,8 @@
 var secure = require ('./secure.js');
 var mongoose = require('mongoose');
 
-if(secure == null || undefined){
-    console.log('NO Secure FILES');
+if(secure == null || secure == undefined){
+    console.log('MongoDB connection error: No Secure File');
     return;
 }
 var mongoDB = `mongodb://${secure.userName}:${secure.password}@${secure.server}/${secure.db}`;

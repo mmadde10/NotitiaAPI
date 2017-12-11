@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         dev: {
             options: {
                 background: true,
-                script: 'server.js'
+                script: '../../../server.js'
             }
         }
     });

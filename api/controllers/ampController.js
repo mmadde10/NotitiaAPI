@@ -4,7 +4,8 @@ var ampHeadModel = require('../models/amp/ampHeadModel');
 var ampBodyModel = require('../models/amp/ampBodyModel');
 */
 var mongoose = require('mongoose');
-var ampHelper = require('../services/ampControllerHelper');
+var ampHelper = require('../services/ampControllerBuilder');
+var ampQuery = require('../services/ampControllerQueries');
 
 //AMP Document read
 exports.list_all_amp_documents = function(req, res){
@@ -13,6 +14,7 @@ exports.list_all_amp_documents = function(req, res){
 };
 //CRUD AMP DOCUMENT
 exports.create_amp_document = function(req, res){
+    let ampDocuments = ampHelper.createAmpDocument(req.params.userId);
     console.log(req.query);
     res.json({message:'NOT IMPLEMENTED:create_amp_document'});
 };
@@ -26,6 +28,13 @@ exports.update_amp_document = function(req, res){
 exports.delete_amp_document = function(req, res){
     res.json({message:'NOT IMPLEMENTED:delte_amp_document'});
 } 
+
+
+
+
+
+
+
 
 //AMP HEADS
 exports.list_all_amp_heads = function(req, res){
@@ -46,6 +55,12 @@ exports.update_amp_head = function(req, res){
 exports.delete_amp_head = function(req, res){
     res.json({message:'NOT IMPLEMENTED:delete_amp_head'});
 }
+
+
+
+
+
+
 
 //AMP Bodies
 exports.list_all_amp_body = function(req, res){

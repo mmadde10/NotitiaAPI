@@ -1,14 +1,4 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-var ampBodySchema = new Schema({
-    ampBodyId: Schema.Types.ObjectId,
-    ampTitle: String,
-    ampAuthor: String,
-    ampArticleText: String,
-    isBody: Boolean,
-    imgID: Schema.Types.ObjectId,
-    ampiframe:{
+var body = {ampiframe:{
         iframeId: Schema.Types.ObjectId,
         title: String,
         src: String,
@@ -75,6 +65,48 @@ var ampBodySchema = new Schema({
                 }]
             },
             userID: {type: Schema.Types.ObjectId, ref: 'user'},
-        }
-});
-module.exports = {ampBodySchema};
+        }}
+
+
+
+//head
+var head = {
+ampSocialShareHeadTag: {
+    type: String, 
+    default:'<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>'
+},
+ampiframeHeadTag: {
+    type: String, 
+    default:'<script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>'
+},
+ampCarouselHeadTag: {
+    type: String, 
+    default:'<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>'
+},
+ampListHeadTag: {
+    type: String, 
+    default:'<script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>'
+},
+ampMustacheHeadTag: {
+   type: String,
+    default:'<script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js"></script>'
+},
+ampAnalyticsHeadTag: {
+    type: String, 
+    default:'<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>'
+},        
+ampAdHeadTag: {
+    type: String, 
+    default:'<script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>'
+}, 
+HeadComponentBooleans:{
+    isAmpAd: Boolean,
+    isYoutube: Boolean, 
+    isAmpMustache:Boolean,
+    isAmpAnalytics: Boolean, 
+    isAmpList:Boolean,
+    isAmpCarousel:Boolean,
+    isAmpiframe: Boolean,
+    isAmpsocialShare: Boolean
+}
+}

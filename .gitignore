@@ -27,3 +27,7 @@ bower_components
 
 #Secure Files
 secure.js
+
+#AWS Stuff
+.elasticbeanstalk
+.AWS

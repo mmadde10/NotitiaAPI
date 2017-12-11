@@ -5,7 +5,7 @@ module.exports = function(app) {               // define our app using express
     app.get('/', function(req, res) {
         res.json({ message: 'hooray! welcome to our api!' });   
     });
-    app.get('/users', function(req, res) {
-        res.json({ message: 'hooray! USERS HERE' });   
-    });
+    app.route('/users')
+        .post(ampDocument.create_user)
+        .delete(ampDocument.delete_user);
 };
