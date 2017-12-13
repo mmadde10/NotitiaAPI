@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var ampHeadDefaults = {
+var ampHeadDefaultsSchema = {
     id: Schema.Types.ObjectId,
     headDefaults: {
     charset:{
@@ -22,4 +22,4 @@ var ampHeadDefaults = {
         }
     }
 }
-modules.exports = {ampHeadDefaults};
+module.exports = {ampHeadDefaultsSchema};

@@ -26,4 +26,4 @@ var ampImgSchema = new Schema({
         }],
     },
 });
-module.exports = ampImgSchema;
+module.exports = {ampImgSchema};

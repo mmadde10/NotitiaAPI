@@ -7,4 +7,4 @@ var ampDocumentSchema = new Schema({
     ampBody: {type: Schema.Types.ObjectId, ref: 'Body' },
     ampHead: {type: Schema.Types.ObjectId, ref: 'Head' },
 });
-module.exports = {ampDocument}
+module.exports = {ampDocumentSchema}

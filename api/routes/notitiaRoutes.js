@@ -6,6 +6,6 @@ module.exports = function(app) {               // define our app using express
         res.json({ message: 'hooray! welcome to our api!' });   
     });
     app.route('/users')
-        .post(ampDocument.create_user)
-        .delete(ampDocument.delete_user);
+        .post(notitiaDocument.create_user)
+        //.delete(notitiaDocument.delete_user);
 };

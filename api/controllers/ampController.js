@@ -43,7 +43,7 @@ exports.list_all_amp_heads = function(req, res){
 //CRUD HEADS
 exports.create_amp_heads = function(req, res){
     let ampHead = ampHelper.buildHead(req.params.userId,req.query);
-    console.log(ampHead);
+    ampQuery.populate(AmpHead,'ampHeadDefaults');
     res.send(ampHead);
 }
 exports.read_amp_head = function(req, res){

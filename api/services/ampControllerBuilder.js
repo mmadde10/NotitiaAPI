@@ -1,78 +1,116 @@
 'use strict';
-var ampDocumentHeadSchema = require('../models/amp/ampHeadModel').ampDocumentHeadSchema;
-var ampBodySchema = require('../models/amp/ampBodyModel').ampBodySchema;
-var ampImgSchema = require('../models/amp/ampImageModel').ampImgSchema;
-var ampArticleSchema = require('../models/amp/ampArticleModel').ampArticleSchema;
-var ampDocument =      require('../models/amp/ampDocumentModel').ampDocumentSchema;
-var queries =          require('../services/ampControllerQueries');
-var mongoose =         require('mongoose');
+var ampDocumentHeadSchema = require('../models/amp/ampHead/ampHeadModel').ampDocumentHeadSchema;
+var ampBodySchema =         require('../models/amp/ampBody/ampBodyModel').ampBodySchema;
+var ampImgSchema =          require('../models/amp/ampBody/ampImageModel').ampImgSchema;
+var ampArticleSchema =      require('../models/amp/ampBody/ampArticleModel').ampArticleSchema;
+var ampDocumentSchema =     require('../models/amp/ampDocumentModel').ampDocumentSchema;
+var queries =               require('../services/ampControllerQueries');
+var ampHeadDefaultsSchema = require('../models/amp/ampHead/ampHeadDefaultsModel').ampHeadDefaultsSchema;
+var mongoose =              require('mongoose');
 
 
 var AmpHead =    mongoose.model('Head', ampDocumentHeadSchema);
 var AmpBody =    mongoose.model('Body', ampBodySchema);
 var ampImg  =    mongoose.model('Image', ampImgSchema);
 var ampArticle = mongoose.model('Article', ampArticleSchema);
-var defaults =   mongoose.model('headDefaults', ampHeadDefaults);
+var HeadDefaults =   mongoose.model('headDefaults', ampHeadDefaultsSchema);
 var document =   mongoose.model('Document',ampDocumentSchema);
 
 
+function buildHead(userId,headData){
 
-function buildHead(userId,headData,headDefaults){
-    var ampHead = new AmpHead({
+    var ampDefaults = buildHeadDefaults();
+
+
+    var ampsHead = new AmpHead({
         ampStyle: headData.style,
-        headDefaults: headDefaults.id,
-        data: headData.date
+        date: headData.date,
+        canonicalLink: headData.canonical,
+        ampHeadDefaults: ampDefaults._id
     });
-    ampHead.save(function(error) {
-        assert.equal(error.errors['name'].message,
-          'Path `name` is required.');
-          //populate the head with head defaults
-        return ampHead;
-      });
-      return ampHead;
-}
-function buildImage(imgData){
-    var ampImage = new ampImg({
-        name: imgData.name,
-        src: imgData.src,
-        width: imgData.width,
-        height:imgData.height,
-        layout:imgData.layout  
+
+
+    ampsHead.save(function(error,saved) {
+        if(error){
+            console.log(error,'error is found\n');
+            return error;
+        }
+        else{
+            return saved;
+        }
     });
-    ampImage.save(function(error) {
-        assert.equal(error.errors['name'].message,
-          'Path `name` is required.');
-        return ampImage;
-      });
-      return ampImage;
+    return AmpHead;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 function buildBody(BodyData,image,ampArticle){
-    var ampBody = {
+
+    var ampBody = new AmpBody({
         ampTitle: bodyData.title,
         ampAuthor: bodyData.author,
         img: image.imgId,
         article: ampArticle.articleId
-    }
+    });
     ampBody.save(function(error) {
-        assert.equal(error.errors['name'].message,
-          'Path `name` is required.');
           //populate body with image and article
+          //var populatedHead = queries.populate(ampHead);
         return ampBody;
       });
       return ampBody;
 }
-
+function buildHeadDefaults(){
+    var ampDefaults = new HeadDefaults({
+        _id: new mongoose.Types.ObjectId()
+    });
+    ampDefaults.save(function(error){
+        if(error){
+            console.log(error,'error is found\n');
+            return error;
+        }
+        else{
+            return
+        }
+    });
+    return ampDefaults;
+}
+    
 function buildArticle(articleData){
     var ampArticle = new ampArticle({
         header: articleData.header,
         paragraph: articleData.paragraph
     });
     ampArticle.save(function(error){
-        assert.equal(error.errors['name'].message,
-        'Path `name` is required.');
       return ampArticle;
     });
     return ampArticle;
+}
+function buildImage(imgData){
+    var ampImage = new ampImg({
+        name:  imgData.name,
+        src:   imgData.src,
+        width: imgData.width,
+        height:imgData.height,
+        layout:imgData.layout  
+    });
+    ampImage.save(function(error){
+        return ampImage;
+      });
+      return ampImage;
 }
 
 function buildAMPDocument(body,head,responseObject){
@@ -82,8 +120,6 @@ function buildAMPDocument(body,head,responseObject){
         ampBody: body.Id
     });
     ampDocument.save(function(error){
-        assert.equal(error.errors['name'].message,
-        'Path `name` is required.');
         //populate amp document with body and head
         var populatedDocument = queries.populate(ampDocument);
       return populatedDocument;
@@ -91,4 +127,4 @@ function buildAMPDocument(body,head,responseObject){
     return ampDocument
 }
 
-module.exports = {buildHead,buildBody,buildImage,buildArticle,buildAMPDocument}
+module.exports = {buildHead,buildBody,buildImage,buildArticle,buildAMPDocument,buildHeadDefaults}
