@@ -5,7 +5,7 @@ var ampBodySchema = new Schema({
     ampBodyId: Schema.Types.ObjectId,
     ampTitle: String,
     ampAuthor: String,
-    ampArticle: {type: Schema.Types.ObjectId, ref: 'ampArticle' },
-    img: {type: Schema.Types.ObjectId, ref: 'img' }
+    ampArticles: [{type: Schema.Types.ObjectId, ref: 'ampArticle' }],
+    imgs: [{type: Schema.Types.ObjectId, ref: 'img' }]
 });
 module.exports = {ampBodySchema};

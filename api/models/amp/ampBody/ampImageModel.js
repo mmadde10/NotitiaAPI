@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ampImgSchema = new Schema({
-    ampImg: {
         imgId: Schema.Types.ObjectId,
         name: {
             type: String,
@@ -12,18 +11,17 @@ var ampImgSchema = new Schema({
             type: String,
             required: true
         },
-        width: [{
+        width: {
             type: Number,
              default: 16
-        }],
-        height: [{
+        },
+        height: {
             type: Number, 
             default: 9
-        }],
-        layout: [{
+        },
+        layout: {
             type: String, 
             default: 'responsive'
-        }],
-    },
+        },
 });
 module.exports = {ampImgSchema};

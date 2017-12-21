@@ -1,80 +1,52 @@
 'use strict';
-var ampDocumentHeadSchema = require('../models/amp/ampHead/ampHeadModel').ampDocumentHeadSchema;
-var ampBodySchema =         require('../models/amp/ampBody/ampBodyModel').ampBodySchema;
-var ampImgSchema =          require('../models/amp/ampBody/ampImageModel').ampImgSchema;
-var ampArticleSchema =      require('../models/amp/ampBody/ampArticleModel').ampArticleSchema;
-var ampDocumentSchema =     require('../models/amp/ampDocumentModel').ampDocumentSchema;
-var queries =               require('../services/ampControllerQueries');
-var ampHeadDefaultsSchema = require('../models/amp/ampHead/ampHeadDefaultsModel').ampHeadDefaultsSchema;
-var mongoose =              require('mongoose');
+let ampDocumentHeadSchema = require('../models/amp/ampHead/ampHeadModel').ampDocumentHeadSchema;
+let ampBodySchema =         require('../models/amp/ampBody/ampBodyModel').ampBodySchema;
+let ampImgSchema =          require('../models/amp/ampBody/ampImageModel').ampImgSchema;
+let ampParagraphSchema =      require('../models/amp/ampBody/ampParagraphModel').ampParagraphSchema;
+let ampDocumentSchema =     require('../models/amp/ampDocumentModel').ampDocumentSchema;
+let queries =               require('../services/ampControllerQueries');
+let ampHeadDefaultsSchema = require('../models/amp/ampHead/ampHeadDefaultsModel').ampHeadDefaultsSchema;
+let mongoose =              require('mongoose');
 
 
-var AmpHead =    mongoose.model('Head', ampDocumentHeadSchema);
-var AmpBody =    mongoose.model('Body', ampBodySchema);
-var ampImg  =    mongoose.model('Image', ampImgSchema);
-var ampArticle = mongoose.model('Article', ampArticleSchema);
-var HeadDefaults =   mongoose.model('headDefaults', ampHeadDefaultsSchema);
-var document =   mongoose.model('Document',ampDocumentSchema);
+let AmpHead =    mongoose.model('Head', ampDocumentHeadSchema);
+let AmpBody =    mongoose.model('Body', ampBodySchema);
+let ampImg  =    mongoose.model('Image', ampImgSchema);
+let ampParagraph = mongoose.model('Paragraph', ampParagraphSchema);
+let HeadDefaults =   mongoose.model('headDefaults', ampHeadDefaultsSchema);
+let document =   mongoose.model('Document',ampDocumentSchema);
 
 
+function getModels(){
+    let models = {
+        Head: AmpHead,
+        Body: AmpBody,
+        Img: ampImg,
+        Defaults: HeadDefaults,
+        Document: document
+    };
+    return models;
+}
 function buildHead(userId,headData){
-
-    var ampDefaults = buildHeadDefaults();
-
-
-    var ampsHead = new AmpHead({
+    let ampDefaults = buildHeadDefaults();
+    let ampsHead = new AmpHead({
         ampStyle: headData.style,
         date: headData.date,
         canonicalLink: headData.canonical,
         ampHeadDefaults: ampDefaults._id
     });
-
-
     ampsHead.save(function(error,saved) {
         if(error){
             console.log(error,'error is found\n');
-            return error;
         }
         else{
-            return saved;
+            console.log(saved,`Saved to the DB`)
+            return;
         }
     });
-    return AmpHead;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-function buildBody(BodyData,image,ampArticle){
-
-    var ampBody = new AmpBody({
-        ampTitle: bodyData.title,
-        ampAuthor: bodyData.author,
-        img: image.imgId,
-        article: ampArticle.articleId
-    });
-    ampBody.save(function(error) {
-          //populate body with image and article
-          //var populatedHead = queries.populate(ampHead);
-        return ampBody;
-      });
-      return ampBody;
 }
 function buildHeadDefaults(){
-    var ampDefaults = new HeadDefaults({
+    let ampDefaults = new HeadDefaults({
         _id: new mongoose.Types.ObjectId()
     });
     ampDefaults.save(function(error){
@@ -88,43 +60,91 @@ function buildHeadDefaults(){
     });
     return ampDefaults;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
-function buildArticle(articleData){
-    var ampArticle = new ampArticle({
-        header: articleData.header,
-        paragraph: articleData.paragraph
+function buildBody(BodyData,image,ampParagraph){
+
+    let ampBody = new AmpBody({
+        ampTitle: bodyData.title,
+        ampAuthor: bodyData.author,
+        imgs: image.imgId,
+        ampParagraphs: ampParagraph.ParagraphId
     });
-    ampArticle.save(function(error){
-      return ampArticle;
-    });
-    return ampArticle;
+    ampBody.save(function(error) {
+          //populate body with image and Paragraph
+          //let populatedHead = queries.populate(ampHead);
+        return ampBody;
+      });
+      return ampBody;
 }
-function buildImage(imgData){
-    var ampImage = new ampImg({
+
+    
+function buildParagraph(paragraphData,res){
+    let ampsParagraph = new ampParagraph({
+        _id: new mongoose.Types.ObjectId(),
+        header: paragraphData.header,
+        paragraph: paragraphData.paragraph
+    });
+    ampsParagraph.save(function(error,cb){
+        if(error){
+            res.send(error);
+        }
+      else{
+            res.send(cb);
+      }  
+    });
+}
+function buildImage(imgData,res){
+    let ampsImage = new ampImg({
         name:  imgData.name,
         src:   imgData.src,
         width: imgData.width,
         height:imgData.height,
         layout:imgData.layout  
     });
-    ampImage.save(function(error){
-        return ampImage;
+    ampsImage.save(function(error,cb){
+        if(error){
+            res.send(error);
+        }
+        else{
+            res.send(cb);
+        }
       });
-      return ampImage;
+    
 }
 
+
+
+
+
+
+
+
 function buildAMPDocument(body,head,responseObject){
-    var ampDocument = new document ({
+    let ampDocument = new document ({
         title: responseObject.title,
         ampHead: head.Id,
         ampBody: body.Id
     });
     ampDocument.save(function(error){
         //populate amp document with body and head
-        var populatedDocument = queries.populate(ampDocument);
-      return populatedDocument;
     });
     return ampDocument
 }
 
-module.exports = {buildHead,buildBody,buildImage,buildArticle,buildAMPDocument,buildHeadDefaults}
+module.exports = {buildHead,buildBody,buildImage,buildParagraph,buildAMPDocument,buildHeadDefaults,getModels}
