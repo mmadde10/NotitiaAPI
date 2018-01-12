@@ -23,11 +23,15 @@ build/Release
 # Bower
 bower_components
 
+# Node Modules
 /node_modules
 
-#Secure Files
+# Secure Files
 secure.js
 
-#AWS Stuff
+# AWS Stuff
 .elasticbeanstalk
 .AWS
+
+# NPM Package lock
+Package-lock.json

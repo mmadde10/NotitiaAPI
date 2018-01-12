@@ -53,6 +53,7 @@
     "memory-cache": "^0.1.6 ",
     "mongodb": "^2.2.33",
     "mongoose": "^4.13.5",
+    "mongoose-user-auth": "^2.0.1",
     "morgan": "1.6.1",
     "mssql": "^3.0.0",
     "mustache": "^2.2.1",

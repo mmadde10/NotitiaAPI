@@ -23,7 +23,8 @@ function getModels(){
         Body: AmpBody,
         Img: ampImg,
         Defaults: HeadDefaults,
-        Document: document
+        Document: document,
+        Paragraph:ampParagraph
     };
     return models;
 }
@@ -60,40 +61,25 @@ function buildHeadDefaults(){
     });
     return ampDefaults;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-function buildBody(BodyData,image,ampParagraph){
-
-    let ampBody = new AmpBody({
-        ampTitle: bodyData.title,
-        ampAuthor: bodyData.author,
-        imgs: image.imgId,
-        ampParagraphs: ampParagraph.ParagraphId
-    });
-    ampBody.save(function(error) {
-          //populate body with image and Paragraph
-          //let populatedHead = queries.populate(ampHead);
-        return ampBody;
-      });
-      return ampBody;
-}
-
-    
+/*
+BUILD BODY
+*/
+function buildBody(BodyData,images,ampParagraphs){
+        let ampBody = new AmpBody({
+            ampTitle: bodyData.title,
+            ampAuthor: bodyData.author,
+            imgs: images.imgId,
+            ampParagraphs: ampParagraphs.ParagraphId
+        });
+    ampBody.save(function(error,cb){
+        if(error){
+            res.send(error);
+        }
+        else{
+        res.json({'message':'Body Saved'});
+      }  
+    });     
+}   
 function buildParagraph(paragraphData,res){
     let ampsParagraph = new ampParagraph({
         _id: new mongoose.Types.ObjectId(),
@@ -105,7 +91,7 @@ function buildParagraph(paragraphData,res){
             res.send(error);
         }
       else{
-            res.send(cb);
+            res.json({'message':'Paragraph Saved'});
       }  
     });
 }
@@ -122,19 +108,11 @@ function buildImage(imgData,res){
             res.send(error);
         }
         else{
-            res.send(cb);
+            res.json({'message':'Image Saved'});
         }
       });
     
 }
-
-
-
-
-
-
-
-
 function buildAMPDocument(body,head,responseObject){
     let ampDocument = new document ({
         title: responseObject.title,

@@ -39,4 +39,14 @@ module.exports = function(app) {
         .put(ampDocument.update_amp_img)
         .delete(ampDocument.delete_amp_img);
 
+
+    app.route('/users/:userId/amp/paragraph/')
+        .get(ampDocument.list_all_amp_Paragraph)  
+        .post(ampDocument.create_amp_Paragraph);
+
+    app.route('/users/:userId/amp/paragraph/:ampParagraphId')
+        .get(ampDocument.read_amp_Paragraph)
+        .put(ampDocument.update_amp_Paragraph)
+        .delete(ampDocument.delete_amp_Paragraph);    
+
 };
