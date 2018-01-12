@@ -1,8 +1,4 @@
 'use strict';
-/*
-var ampHeadModel = require('../models/amp/ampHeadModel');
-var ampBodyModel = require('../models/amp/ampBodyModel');
-*/
 var mongoose = require('mongoose');
 var ampHelper = require('../services/ampControllerBuilder');
 var ampQuery = require('../services/ampControllerQueries');
