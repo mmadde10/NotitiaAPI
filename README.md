@@ -9,7 +9,7 @@
 * To access the API and connection to the mongoDB is needed. A secure file is needed for the connection. Please email if needed.
 
 #### To View Development Progress 
-* (NotitiaAPI Board)[https://trello.com/b/dD7wxkIC/notitiaapi-sprint-1]
+* [NotitiaAPI Board](https://trello.com/b/dD7wxkIC/notitiaapi-sprint-1)
 
 * Install NODE, NPM
 
