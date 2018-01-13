@@ -4,12 +4,13 @@
 
  Notitia API is a RESTful API for getting and posting AMP and FB Instant articles for the upcoming Notitia CMS.
 
+
+### To View Development Progress 
+* [NotitiaAPI Board](https://trello.com/b/dD7wxkIC/notitiaapi-sprint-1)
+
 ### Developer Get Started
 
 * To access the API and connection to the mongoDB is needed. A secure file is needed for the connection. Please email if needed.
-
-#### To View Development Progress 
-* [NotitiaAPI Board](https://trello.com/b/dD7wxkIC/notitiaapi-sprint-1)
 
 * Install NODE, NPM
 
