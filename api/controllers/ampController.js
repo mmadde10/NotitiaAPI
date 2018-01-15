@@ -12,7 +12,7 @@ Amp Document
 
 */
 exports.list_all_amp_documents = function(req, res){
-    Model.Document.find({}).populate('ampHeadDefaults');ffkdsnfkljnsd;kl.lean().exec(function (err, callback){
+    Model.Document.find({}).populate('ampHeadDefaults').lean().exec(function (err, callback){
         if (err){
             res.send(err);
         }

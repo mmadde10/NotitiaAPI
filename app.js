@@ -4,8 +4,6 @@ var bodyParser = require('body-parser');
 var consign    = require('consign');
 var mongoose = require('mongoose');
 
-
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
