@@ -2,12 +2,9 @@
 let ampDocumentHeadSchema = require('../models/amp/ampHead/ampHeadModel').ampDocumentHeadSchema;
 let ampBodySchema =         require('../models/amp/ampBody/ampBodyModel').ampBodySchema;
 let ampImgSchema =          require('../models/amp/ampBody/ampImageModel').ampImgSchema;
-let ampParagraphSchema =      require('../models/amp/ampBody/ampParagraphModel').ampParagraphSchema;
+let ampParagraphSchema =    require('../models/amp/ampBody/ampParagraphModel').ampParagraphSchema;
 let ampDocumentSchema =     require('../models/amp/ampDocumentModel').ampDocumentSchema;
-let queries =               require('../services/ampControllerQueries');
 let ampHeadDefaultsSchema = require('../models/amp/ampHead/ampHeadDefaultsModel').ampHeadDefaultsSchema;
-let mongoose =              require('mongoose');
-
 
 let AmpHead =    mongoose.model('Head', ampDocumentHeadSchema);
 let AmpBody =    mongoose.model('Body', ampBodySchema);
@@ -16,6 +13,8 @@ let ampParagraph = mongoose.model('Paragraph', ampParagraphSchema);
 let HeadDefaults =   mongoose.model('headDefaults', ampHeadDefaultsSchema);
 let document =   mongoose.model('Document',ampDocumentSchema);
 
+let queries =               require('../services/ampControllerQueries');
+let mongoose =              require('mongoose');
 
 function getModels(){
     let models = {
