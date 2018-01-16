@@ -24,15 +24,14 @@ build/Release
 bower_components
 
 # Node Modules
-/node_modules
+/functions/node_modules
 
 # Secure Files
 secure.js
 secureSO.js
 
-# AWS Stuff
-.elasticbeanstalk
-.AWS
+# Firebase Stuff
+.firebaserc
 
 # NPM Package lock
 Package-lock.json
